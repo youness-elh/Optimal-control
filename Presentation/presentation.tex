@@ -1,0 +1,407 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+\usepackage{beamerthemesplit}
+\usepackage{pgfgantt}
+\usetheme{Warsaw}
+\usecolortheme{}
+\usepackage{sidecap}
+%\usepackage[french]{babel}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8x]{inputenc}
+\usetikzlibrary{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath,amssymb,theorem}
+\usepackage[all]{xy}
+\usepackage{textcomp}
+%\usepackage{variations}
+\usepackage{pstricks,pst-plot,pstricks-add}
+\usepackage{bm, listings, ccaption}
+\usepackage{xcolor,epic,eepic,multicol}
+\graphicspath{{Images_Fichiers/}}
+
+\newcommand{\mat}[4]{ \begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix} }
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\gs}[1]{\textbf{\underline{#1}}}
+\newcommand{\thm}[2]{\begin{center}
+{\color{blue} #1} \\
+\fbox{ #2}
+\end{center} }
+
+\title{Exercice II.7}
+\author{El Houssaini Youness}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{Sytème de contôle} 
+\begin {frame}
+On considère le système de contrôle: $$(\Sigma): \quad \left\lbrace\begin{array}{ll}
+x'(t) = y(t)+u(t) & ,t\geq 0\\
+y'(t) = -y(t)+u(t) & ,t\geq 0\\
+|u(.)| \leq 1 
+\end{array}\right.$$
+où $x$ , $y$ et $u$ sont trois applications: $[0,T] \subset R^{+} \rightarrow R $.
+
+Le but est de joindre en temps minimal la droite x = 0, puis de rester sur cette droite. \\
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (i) -  Énoncé}
+On considère la cible $M_1 = \left\lbrace(0,y),\,|y| ≤ 1\right\rbrace$ et on s’intéresse à l’existence et la caractérisation de trajectoires temps optimales pour le problème $(\Sigma)$ décrit au dessus. \\
+\vspace{1cm}
+{\color{blue}{Montrer que si un tel contrôle existe, alors on a nécessairement |y(t)| ≤ 1 lorsque
+x(t) = 0. Réciproquement, montrer que de tout point (0,y) ∈ $M_1$, part une trajectoire restant dans $M_1$}.}
+\end{frame}
+
+\section{Question i}
+\begin {frame}
+  \frametitle{Question (i) - Montrer que si un tel contrôle existe, alors on a nécessairement |y(t)| ≤ 1 lorsque x(t) = 0.}
+En effet, en supposant qu'il y a bien un contôle de ce système: \\
+Lorsque $x(t)= 0$, on a $x'(t) = 0$. 
+On remplace dans: $$(\Sigma): \quad \left\lbrace\begin{array}{ll}
+\fbox{\color{blue}{x'(t) = y(t)+u(t)}} & ,t\geq 0\\
+y'(t) = -y(t)+u(t) & ,t\geq 0\\
+{|u(.)| \leq 1}
+\end{array}\right.$$.
+
+$$(\Sigma) \implies \quad y(t) = -u(t)$$
+Or, $|u(.)| \leq 1 $.\\
+Alors on a nécessairement: $$|y(t)| ≤ 1 \,\, lorsque \,\, x(t) = 0$$.
+ 
+\end {frame}
+\begin{frame}
+\frametitle{Question (i) -  Réciproquement, montrer que de tout point (0,y) ∈ $M_1$, part une trajectoire restant dans $M_1$.}
+En effet, soit $(0,y) \in M_1$
+on remarque que si $x(t)= 0$, alors  $x'(t) = 0$. \\
+On remplace dans: $$(\Sigma): \quad \left\lbrace\begin{array}{ll}
+\fbox{\color{blue}{x'(t) = y(t)+u(t)}} & ,t\geq 0\\
+y'(t) = -y(t)+u(t) & ,t\geq 0\\
+{|u(.)| \leq 1}
+\end{array}\right.$$.
+Et on obtient: $y(t) = -u(t)$ \\
+Puis on remplace dans: $$(\Sigma): \quad \left\lbrace\begin{array}{ll}
+x'(t) = y(t)+u(t) & ,t\geq 0\\
+\fbox{\color{blue}{y'(t) = -y(t)+u(t)}} & ,t\geq 0\\
+{|u(.)| \leq 1}
+\end{array}\right.$$.
+ 
+\end {frame}
+\begin{frame}
+Et on en déduit que $\forall t \geq 0$:
+$$y(t) = y(0)e^{-2t}$$
+On a:  $y \in M_1$ alors:$|y(0)| \leq 1 $ \\
+On remarque aussi: $0 \leq e^{-2t} \leq 1$ \\
+Donc:  $$\forall t \geq 0 \quad |y(t)| \leq 1$$\\
+En d'autre termes: \\
+$\forall (0,y) ∈ M_1$, part une trajectoire restant dans $M_1$.
+ 
+\end {frame}
+
+\begin {frame}
+\frametitle{Question (ii) -   Etudier l’existence d’une trajectoire temps optimale.}
+
+Le système de contôle $(\Sigma)$ peut être représenté sous la forme canonique linéaire comme suite: $$
+\left\lbrace\begin{array}{ll}
+X'(t) = AX(t)+Bu(t)& ,t\in [0,T]\\
+X(0)=X_0&, X_0\in \R^2\\
+\end{array}\right.
+$$
+
+En posant $X = (x,y)^T \in \mathbf{M}_{2,1}(\R)$ avec $A=\mat{0}{1}{0}{-1} \in \mathbf{M}_{2,2}(\R)$ et $B=(1,1)^T \in \mathbf{M}_{2,1}(\R)$. Notons que la commande $u \in L^{\infty}(0,T,U)$, où U = [-1,1] est un sous-ensemble mesurable de $\R$.
+
+\end {frame}
+\section{Question ii}
+\begin{frame}
+%\frametitle{Question (ii) -   Etudier l’existence d’une trajectoire temps optimale.}
+{Théorème II.1.1. Existence de commandes temps optimales: \\ \color{blue}{On suppose que U est compact. Si le point $x_1$ est accessible depuis $x_0$ avec un contrôle u à valeurs dans U, alors il existe une trajectoire temps-minimale reliant $x_0$ à $x_1$. De plus, $x_1$ est nécessairement extrémal, autrement dit $x_1 \in ∂A(x_0,t^∗)$.}}
+
+{Dans notre cas:}\\
+
+La commande $u \in L^{\infty}(0,T,U)$, où U est un sous-ensemble mesurable de $\R$. en effet,$U =[-1,1]$ est bien compact.\\
+On a aussi montré que si $X_0 \in M_1$ alors $\exists X_1$ accessible depuis $X_0$. en plus on a aussi que $X_1 \in M_1$.\\
+
+Donc: il existe une trajectoire temps-minimale reliant $X_0$ à $X_1$.
+\end {frame}
+
+\section{Question iii}
+\begin{frame}
+\frametitle{Question (iii) -   Ènoncé}
+On cherche à caractériser les trajectoires temps optimales. On choisit de raisonner
+"en temps inverse", en calculant les trajectoires joignant $M_1$ à tout point final.\\
+
+(a) Écrire le Hamiltonien du problème de contrôle optimal et les équations adjointes.
+En déduire que le contrôle optimal est bang-bang avec au plus une commutation.\\
+(b) En utilisant les conditions de transversalité, montrer que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas. Représenter quelques unes des trajectoires associées.
+\end {frame}
+
+
+\begin{frame}
+%\frametitle{Question (iii) -   (a) Écrire le Hamiltonien du problème de contrôle optimal et les équations adjointes}
+{Théorème II.3.2. Principe du maximum de Pontryagin, version générale \\
+\color{blue}{Soit $M_1$ un sous-ensembles de $\R^n$.
+Si le contrôle $u ∈ U$ associé à la trajectoire $x(\cdot)$ est optimal sur [0,T], alors il existe une application $p(\cdot) : [0,T] \rightarrow \R^n$ absolument continue appelée vecteur adjoint, et un réel $p^0 \leq 0$, tels que le couple $(p(\cdot),p^0)$ est non trivial, et tels que, pour presque tout $t ∈ [0,T],$\\
+$$ x'(t) = \frac {∂H}{∂p}(t,x(t),p(t),p^0,u(t)),$$}}
+
+\end {frame}
+
+
+\begin{frame}
+%\frametitle{Question (iii) -   (a) Écrire le Hamiltonien du problème de contrôle optimal et les équations adjointes}
+{\color{blue}{$$p'(t)  = −\frac{∂H}{∂x}(t,x(t),p(t),p^0,u(t)),$$
+et on a la condition de maximisation presque partout sur [0,T]
+$$H(t,x(t),p(t),p^0,u(t)) = max_{v∈U} H(t,x(t),p(t),p^0 ,v).$$
+Si de plus le temps final pour joindre la cible $M_1$ n’est pas fixé, on a la condition au temps final T:
+ $$max_{v∈U} H(T,x(T),p(T),p^0 ,v) = −p^0 \frac {∂g}{∂t}(T,x(T)).\quad \quad (*)$$}}
+
+\end {frame}
+\begin{frame}
+\frametitle{Question (iii) -   (a) Écrire le Hamiltonien du problème de contrôle optimal et les équations adjointes}
+Dans notre cas:\\
+La cible $M_1 \subset \R^2$ et on définit le Hamiltonien du système de contrôle optimal sur $\R \times \R^2 \times \R^2 \times \R_{-} \times R$ par:
+
+$$H(t,x(t),p(t),p^0 ,u) = <p(t),f(t,x(t),u(t))> + p^0f^0$$
+\end {frame}
+\begin{frame}
+Avec $f : \R × \R^2 × \R \rightarrow \R^2$ est de classe $C^1$, 
+$$x'(t) = f(t,x(t),u(t)) = Ax(t)+Bu(t)$$ 
+et où les contrôles sont des applications mesurables et bornées définies sur un intervalle $[0,T(u)[$ de $\R_+$ et à valeurs dans $U=[-1,1] ⊂ \R$.
+
+\end {frame}
+\begin{frame}
+Par ailleurs on définit la fonctionnelle de coût: \\
+$$\fbox{$C(T,u) = \int_0^T f^0(s,x(s),u(s))ds + g(T,x(T))$}$$\\
+
+avec $f^0 : \R \times \R^2 \times \R \rightarrow 0$ et $g: \R_{+} \times \R^2 \rightarrow t$\\
+Afin d'avoir la reformulation de notre problème de contrôle optimal suivante:
+$$inf_{T \in \R^+ \, u \in U} C(T,u) = inf_{T \in \R^+ \, u \in U} T_u$$
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -   (a) Écrire le Hamiltonien du problème de contrôle optimal et les équations adjointes}
+On applique le Théorème II.3.2:\\
+
+$$ x'(t) = \frac {∂H}{∂p}(t,x(t),p(t),p^0,u(t)) = Ax(t) + Bu(t)$$
+%$$p'(t)  = −\frac{∂H}{∂x}(t,x(t),p(t),p^0,u(t)) $$ \\
+$$p'(t)  = −\frac{∂<p(t),f(t,x(t),u(t))>}{∂x} = −\frac{∂<p(t),Ax(t)+Bu(t)>}{∂x}$$ \\
+$$p'(t)  = −\frac{∂<p(t),Ax(t)>}{∂x}= -A^T p(t)$$ \\
+Remarque: Ce qui peut être obtenue par le Théorème II.1.2.
+\end {frame}
+
+\begin{frame}
+%\frametitle{Question (iii) -   Rappel}
+{Théorème II.1.2. Condition d’optimalité et principe du maximum de Pontryagin: \\
+\color{blue}{Soit $u ∈ L^{\infty}(0,T,U)$ une commande qui transfère le système ($\Sigma$) de $x(0) = x0$ à $x(T) = xT ∈ \R^2$. Si le temps T est minimum, alors il existe une fonction p non identiquement nulle solution de l’équation adjointe $p'(t) = −A^Tp(t), t ∈ [0,T]$ telle que pour presque tous $s ∈ [0,T], u(s)$ réalise instantanément le maximum de l’Hamiltonien $H : U \ni v→ <p(s), Bv>_{\R^2}$ .}}
+Alors le maximum du hamiltonien : $max_{v \in U} <B^Tp(s),v>_{\R^2}$ \\
+est atteind en v = 1 ou -1 (bornes de U=[-1,1])
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -   (a) Écrire le Hamiltonien du problème de contrôle optimal et les équations adjointes}
+$$p'(t)  = -A^T p(t)$$ 
+$$\implies p(t) = p(0)e^{-tA^T}$$
+En particulier pour t = T:  $\quad p(T) = p(0)e^{-TA^T}$\\
+ $$\implies p(0) = p(T)e^{TA^T}$$\\
+Le vecteur adjoint est donc:
+$$p(t) = p(T)e^{(T-t)A^T}$$
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -   (a) En déduire que le contrôle optimal est bang-bang avec au plus une commutation.}
+On a la condition de maximisation presque partout sur [0,T]\\
+$$H(t,x(t),p(t),p^0,u(t)) = max_{v∈U} H(t,x(t),p(t),p^0,v(t)) $$
+$$ \iff u(t) = argmax_{v∈U} <p(t),Ax(t)+Bv(t)> $$
+$$ \iff u(t) = argmax_{v∈U} <p(t),Bv(t)> $$
+On remarque que le max est atteint dans les bords de U.\\
+$u = 1$ si $<p(t),B>_{\R^2} $ positif et $u = -1$ sinon. \\
+Donc le contrôle optimal est dit bang-bang avec au plus une commutation.
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -   (b) En utilisant les conditions de transversalité, montrer que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas.}
+On a la condition au temps final a T:\\
+$$max_{v∈U} H(T,x(T),p(T),p^0,v) = −p^0 \frac {∂g}{∂t}(T,x(T))$$
+$$\iff max_{v∈U} <p(T),Ax(T)+Bv(T)> = -p^0  \frac {∂t}{∂t}(T,x(T)) $$
+En posant $p^0 = -1$:\\
+$$ max_{v∈U} <p(T),Ax(T)+Bv(T)> = 1$$
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -   (b) En utilisant les conditions de transversalité, montrer que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas.}
+Il faut d'abord déterminer p(T), en utilisant les conditions de transversalité. \\
+Pour ce faire:\
+\begin{enumerate}
+\item Déterminer \underline{l'espace tangent} $\mathbb T_x M_1$;
+\item Montrer que $M_1$ est variété de $\R^2$ ayant des espaces tangents en $X(T) ∈ M_1$;
+\item Trouver un vecteur adjoint $p(T)$ tel que: $$p(T) \bot \mathbb T_{x(T)} M_1 $$.
+\end{enumerate}
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -   Déterminer \underline{l'espace tangent} $\mathbb T_x M_1$}
+Selon la question (i), $M_1$ peut être aussi représenté comme suite:
+$$M_1 = \lbrace X=(x,y) \in \R^2, \quad F(X)=x=0 \rbrace$$
+Où F est une fonction de classe $C^1$ de $\R^2$ dans $\R$.\\
+Selon la $\underline{Remarque \, II.3.3}$ du cours:\\
+$$\mathbb T_xM_1 = \lbrace v ∈ \R^2| ∇F(X).v = 0 \rbrace = \lbrace v= (0,y) ∈ \R^2\rbrace. $$
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -   $M_1$ est variété de $\R^2$ ayant des
+espaces tangents en $X(T) ∈ M_1$}
+\begin{center} 
+Définition: 
+\end{center}
+\vspace{0.2cm}
+{\color{blue}{ Soit $M ⊂ \R^n$. On dit que M est une sous-variété de $\R^n$ de dimension p et de classe $C^k$ si pour tout x de M, il existe des voisinages respectifs U de x dans $\R^n$ et V de 0 dans $\R^n$, ainsi qu’un $C^k$ -difféomorphisme $f : U → V$ , envoyant x sur 0 et telle que: $$f(U ∩ M) = V ∩ (\R^p × \lbrace 0 \rbrace).$$}}
+On remarque que $f(\R^2 \cap M_1) = \R^2 \cap (\R \times \lbrace 0 \rbrace)$ \\ avec $f(x,y) = (0,y)$.\\
+Alors $M_1$ est bien une variété de $\R^2$.
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -  Trouver un vecteur $p(T)$ tel que: $$p(T) \bot \mathbb T_{x(T)} M_1. $$}
+
+On a:
+$$\mathbb T_xM_1 = \lbrace v ∈ \R^2| ∇F(X).v = 0 \rbrace = \lbrace v= (0,y)\rbrace$$
+ $$\implies \, p(T) = \lambda ∇F(X) = \lambda \left(\begin{matrix} 
+        1\\ 
+        0
+      \end{matrix} \right) $$
+Avec $\lambda \in \R$, Or, $M_1$ est convexe donc $p(T)$ est unitaire (Voir Remarque 3 du cours commande temps minimum de systèmes linéaires), On prend $\lambda = 1$ pour le reste de l'exercice.
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -   (b) En utilisant les conditions de transversalité, montrer que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas.}
+On a la condition au temps final a T:\\
+$$max_{v∈U} H(T,x(T),p(T),p^0,v) = −p^0 \frac {∂g}{∂t}(T,x(T))$$
+$$\iff max_{v∈U} <p(T),Ax(T)+Bv(T)> = -p^0  \frac {∂t}{∂t}(T,x(T)) $$
+En posant $p^0 = -1$ (choix du cours):\\
+$$ max_{v∈U} <p(T),Ax(T)+Bv(T)> = 1 \quad (*)$$
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -  (b) En utilisant les conditions de transversalité, montrer que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas.}
+
+ $$(*) \, \iff  max_{v∈U} <p(T),Ax(T)+Bv(T)> = 1$$
+ 
+Selon Duhamel:\\
+$$AX(T) = Ae^{TA}X_0 + \int_0^T Ae^{(T-s)A}Bu(T)ds$$
+$\iff $ $$AX(T) = Ae^{TA}X_0 - \big[e^{(T-s)A}\big]_0^TBu(T)$$
+$\iff $ $$ AX(T) = Ae^{TA}X_0 + e^{TA}Bu(T)$$
+
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -  (b) En utilisant les conditions de transversalité, montrer que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas.}
+
+On remplace dans (*):
+ $$(*) \, \iff   <p(T),Ae^{TA}X_0 + e^{TA}Bu(T) + Bu(T)> = 1$$
+ 
+Avec:\\
+$p(T) = \left(\begin{matrix} 
+        1\\ 
+        0
+      \end{matrix} \right)$, $ u(T) = \lbrace -1,1 \rbrace$ et,
+$B = \left(\begin{matrix} 
+        1\\ 
+        1
+      \end{matrix} \right)$ et $A = \left(\begin{matrix} 
+        0 & 1\\ 
+        0 & -1
+      \end{matrix} \right)$ et $e^{TA} = \left(\begin{matrix} 
+        1 & e^{T} \\ 
+        1 & -e^{T}
+      \end{matrix} \right)$ et $Ae^{TA} = \left(\begin{matrix} 
+        1 & -e^{T} \\ 
+        -1 & e^{T}
+      \end{matrix} \right)$
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -  (b) En utilisant les conditions de transversalité, montrer que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas.}
+
+On remplace dans (*):\\
+$(*) \, \implies $ 
+ $$ <\left(\begin{matrix} 
+        1\\ 
+        0
+      \end{matrix} \right),\left(\begin{matrix} 
+        1 & -e^{T} \\ 
+        -1 & e^{T}
+      \end{matrix} \right)\left(\begin{matrix} 
+        x_0\\ 
+        y_0
+      \end{matrix} \right) +  \big[\left(\begin{matrix} 
+        1 & e^{T} \\ 
+        1 & -e^{T}
+      \end{matrix} \right)\left(\begin{matrix} 
+        1\\ 
+        1
+      \end{matrix} \right)+ \left(\begin{matrix} 
+        1\\ 
+        1
+      \end{matrix} \right)\big]u(T)>_{\R^2} = 1$$
+$\implies $ 
+
+$$ \big[ x_0 - y_0e^{T} + (2+e^{T})u(T) \big] = 1 \quad (**)$$
+\end {frame}
+\begin{frame}
+\frametitle{Question (iii) -  (b) En utilisant les conditions de transversalité, montrer que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas.}
+
+On suppose maintenant que $X_0 \in M_1$:
+$\implies x_0 = 0 et |y_0| \leq 0$\\
+Aussi on remplace u(T) par l'une des possibilité du contrôle, soit $u(T)=1$ ou $u(T)=-1$ et
+on remplace dans (**) repectivement:\\
+
+$$ \big[ - y_0e^{T} + 2+e^{T} \big] = 1 \, ou \, \big[ - y_0e^{T} - 2-e^{T} \big] = 1$$
+$\implies$ 
+$$e^{T} = \frac{-1} {1- y_0} \leq 0 \quad ou \quad e^{T} = \frac{-3} {1 + y_0} \leq 0$$
+\color{red}{Absurde!}
+Donc le contôle ne commute pas dans ce cas de figure. \color{green}{Alors le tram s'arrêtes!}
+\end {frame}
+\begin{frame}
+\frametitle{Question (iii) -  Représenter quelques unes des trajectoires associées.}
+Pour rerésenter quelques trajectoires on prend des valeurs de $X_0 \notin M_1.$ On se fixe un temps minimal de $T = ln(2)$ et son contrôle optimale correspondant de $u_t$ donné par la condition de maximisation:
+$$ max_{v∈U} <p(t),Bv(t)> $$
+$$\iff max_{v∈U} <p(T)e^{(T-t)A^T},Bv(t)> $$
+Et Duhamel nous donnes ensuite les trajectoires en fonctions de $X_0$:
+$$X(t) = e^{tA}X_0 + \int_0^t e^{(T-s)A}Bu(s)ds$$
+
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -  Représenter quelques unes des trajectoires associées.}
+En plus, selon la condition de temps optimal on a les équations suivantes qui nous permettent de tirer les points de départ $X_0$:
+
+$$\left\lbrace\begin{array}{ll}
+x_0 =  2y_0 - 3  & ,u_T = 1\\
+x_0 =  2y_0 + 5  & ,u_T = -1\\
+ 
+\end{array}\right.$$
+\end {frame}
+
+\begin{frame}
+\frametitle{Question (iii) -  Représenter quelques unes des trajectoires associées.}
+$\forall t \in [0,T]$, ici T =ln(2) pour simplifier les calcules, la procédure se résume comme suite:
+\begin{enumerate}
+\item Déterminer le contrôle u  $\quad \forall t \in [0,T]$ 
+$$u= argmax_{v∈U} <p(T),e^{(T-t)A}Bv(t)>  \quad p(T) = (1,0)^T \in \R^2$$
+\item Donner $X_0=(x0,y0) \quad X_0 \notin M_1$ tel que:
+$$\left\lbrace\begin{array}{ll}
+x_0 =  2y_0 - 3  & ,u_{ln(2)} = 1\\
+x_0 =  2y_0 + 5  & ,u_{ln(2)} = -1\\
+\end{array}\right.$$
+\item En déduire: $X(t) = e^{tA}X_0 + \int_0^t e^{(T-s)A}Bu(s)ds.$
+\end{enumerate}
+
+\end {frame}
+
+\end{document}

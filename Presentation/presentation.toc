@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Syt\begingroup \let \relax \relax \endgroup [Pleaseinsert\PrerenderUnicode {è}intopreamble]me de cont\begingroup \let \relax \relax \endgroup [Pleaseinsert\PrerenderUnicode {ô}intopreamble]le}{2}{0}{1}
+\beamer@sectionintoc {2}{Question i}{4}{0}{2}
+\beamer@sectionintoc {3}{Question ii}{8}{0}{3}
+\beamer@sectionintoc {4}{Question iii}{9}{0}{4}

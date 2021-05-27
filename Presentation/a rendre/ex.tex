@@ -1,0 +1,268 @@
+\documentclass[11pt]{beamer}
+\usetheme{PaloAlto}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Anki Lucas \\ El Houssaini Youness}
+\title{Exercice II.7}
+\setbeamercovered{transparent} 
+\setbeamertemplate{navigation symbols}{}  
+\institute{Contrôle Optimal} 
+\date{20/11/2020} 
+%\subject{Gestion d'un corpus de données issues de tests de fatigue sur un banc d'essai} 
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Énoncé}
+Considérons le système de contrôle 
+$$
+\left\{
+\begin{array}{ll}
+x'(t) = y(t)+u(t) & t\geq 0\\
+y'(t) = -y(t)+u(t) & t\geq 0\\
+|u(.)| \leq 1
+\end{array}
+\right.
+$$
+Le but est de joindre en temps minimal la droite $x=0$, puis de rester sur cette droite.
+On considère la cible $M_1=\{(0,y)| |y|\leq 1\}$ et on s'intéresse à l'existence et la caractérisation de trajectoires temps optimales pour ce problème.
+\end{frame}
+
+\begin{frame}{Question 1}
+Montrons que si un tel contrôle existe, alors on a nécessairement $|y(t)|\leq 1$ lorsque $x(t)=0$ :\newline
+
+On suppose qu'un tel contrôle existe. On suppose que $x(t)=0$. Soit $t\geq 0$.\newline
+
+Alors $x'(t)=0$, donc d'après le système de contrôle, $y(t)=-u(t)$.
+Or $|u(t)| \leq 1$ donc $|y(t)|\leq 1$.
+\end{frame}
+
+\begin{frame}{Question (i)}
+Montrons que réciproquement, de tout point $(0,y)\in M_1$ part une trajectoire restant dans $M_1$.\newline
+
+En effet, soit $(0,y) \in M_1$, on remarque que si $x(t)=0$, alors $x'(t)=0$.\newline
+On déduit donc de la première équation que $y(t)=-u(t)$.\newline
+En injectant dans la deuxième, on trouve que $y'(t)=-2y(t)$.\newline
+
+Par conséquent, pour tout $t\geq 0$ :
+\begin{equation}
+y(t)=y(0)e^{-2t}
+\end{equation}
+
+C'est une trajectoire solution du problème en postulant que x(t)=0. Qui est donc l'unique solution par  le théorème de Cauchy-Lipschitz.\\ (Théorème I.2.1. Cauchy-Lipschitz du polycopié).  
+\end{frame}
+
+\begin{frame}{Question (i)}
+En effet: \\
+\vspace{0.2cm} Comme $y \in M_1$, alors $|y(0)| \leq 1$.\newline
+De plus $0 \leq e^{-2t} \leq 1$.\newline
+
+Donc pour tout $t \geq 0$ : 
+\begin{equation*}
+|y(t)| \leq 1
+\end{equation*}
+
+En d'autres termes, pour tout $(0,y)$ dans $M_1$, part une trajectoire restant dans $M_1$.
+
+\end{frame}
+
+\begin{frame}{Question (ii)}
+Étudions l'existence d'une trajectoire en temps optimale.\newline
+
+Posons $X = \begin{pmatrix} x \\ y \end{pmatrix}$, 
+$X' = \begin{pmatrix} x' \\ y' \end{pmatrix}$.
+Alors le système de contrôle peut se mettre sous la forme :
+\begin{equation}
+X'= \begin{pmatrix} 0 & 1 \\ 0 & -1 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix}
++ \begin{pmatrix} 1 \\ 1 \end{pmatrix} u
+\end{equation} 
+Nous avons donc la matrice de Kalman associée au problème 
+\begin{equation}
+Kal[B|AB]= \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
+\end{equation}
+qui est de rang $2$, donc il existe une trajectoire en temps optimale.
+\end{frame}
+
+\begin{frame}{Question (iii)(a)}
+On cherche à caractériser les trajectoires temps optimales. On choisit de raisonner "en temps inverse", en calculant les trajectoires joignant $M_1$ à tout point final.\newline
+
+Pour cela, on pose $\tilde{X} = X(T-t)$, par facilité de notation, on continuera d'écrire $X$ au lieu de $\tilde{X}$.\newline
+
+Montrons, en écrivant le Hamiltonien et les équations adjointes, que le contrôle optimale est bang-bang avec au plus une commutation.
+\end{frame}
+
+\begin{frame}{Question (iii)(a)}
+On écrit notre système sous la forme :
+\begin{equation}
+X'(t) = f(t,X(t),u(t)
+\end{equation}
+avec 
+\begin{align*}
+f : \mathbb{R}\times\mathbb{R}^2\times\mathbb{R} &\longrightarrow \mathbb{R}^2 \\
+(t,X,u) &\longmapsto \begin{pmatrix} -y(t)-u(t) \\ y(t)-u(t) \end{pmatrix}
+\end{align*}
+
+On veut minimiser 
+\begin{equation}
+C(T,u)=\int_0^T f^0(s,X(s),u(s))ds + g(T,X(T))
+\end{equation}
+Ici $f^0 = 0$ et $g(T,X(T))=T$.
+\end{frame}
+
+\begin{frame}{Question (iii)(a)}
+On rappelle l'expression du Hamiltonien : 
+\begin{align*}
+H : &\mathbb{R}\times\mathbb{R}^2\times\mathbb{R}^2\times\mathbb{R}\times\mathbb{R}  \longrightarrow \mathbb{R} \\
+&(t,X,P,p^0,u) \longmapsto <P,f(t,X(t),u(t)> + p^0 f^0(t,X(t),u(t))
+\end{align*}
+
+Soit $P = \begin{pmatrix} p_1 \\ p_2 \end{pmatrix}$. On a donc 
+\begin{equation}
+H = -p_1(y+u) + p_2(y-u)
+\end{equation}
+\end{frame}
+
+\begin{frame}{Question (iii)(a)}
+On applique le PMP. Soit $u$ optimal, il existe $P$ absolument continu, $p^0$ négatif tel que :
+\begin{align}
+&X'(t) = \frac{\partial H}{\partial P} = \begin{pmatrix} -y(t)-u(t) \\ y(t)-u(t) \end{pmatrix} \\
+&P'(t) = - \frac{\partial H}{\partial X} = \begin{pmatrix} 0 \\ p_1(t)-p_2(t) \end{pmatrix} = \begin{pmatrix} p_1'(t) \\ p_2'(t) \end{pmatrix}
+\end{align}
+\end{frame}
+
+\begin{frame}{Question (iii)(a)}
+On a donc 
+\begin{align*}
+H(t,X,P,p^0,u) &= \max_{v\in[-1,1]} H(t,X,P,p^0,v) \\
+&= \max_{v\in[-1,1]} -p_1(y+v) + p_2(y-v) \\
+&= (p_2-p_1)y - \min_{v\in[-1,1]} v(p_1+p_2)
+\end{align*}
+
+Donc $u(t)=-signe(p_1(t)+p_2(t))$.
+
+\end{frame}
+
+\begin{frame}{Question (iii)(a)}
+
+On sait que $P= \begin{pmatrix} p_1 \\ p_2 \end{pmatrix}$ résout le système :
+
+$$
+\left\{
+\begin{array}{ll}
+p_1' = 0 \\
+p_2' = p_1-p_2
+\end{array}
+\right.
+$$
+
+Ce système a pour solution :
+$$
+\left\{
+\begin{array}{ll}
+p_1(t) = c_1 \\
+p_2(t) = c_1 + c_2e^{-t}
+\end{array}
+\right.
+$$
+Avec $c_1,c_2$ deux constantes.\newline
+En évaluant $p_2$ en $0$, on trouve que  
+\begin{equation}
+p_2(t) = c_1 + (p_2(0)-c_1)e^{-t}
+\end{equation}
+\end{frame}
+
+\begin{frame}{Question (iii)(a)}
+Donc 
+\begin{equation}
+H = (p_1-p_2)y - \min_{v\in[-1,1]} v(2c_1 + (p_2(0)-c_1)e^{-t})
+\end{equation}
+
+On constate que la fonction $t\longmapsto 2c_1 + (p_2(0)-c_1)e^{-t}$ est strictement monotone, on en déduit donc que $u$ est bang-bang.
+De plus il n'y a qu'un seul changement de signe au plus, donc il y a au plus un point de commutation .
+\end{frame}
+
+\begin{frame}{Question (iii)(b)}
+Montrons, en utilisant les conditions de transversalité, que si les conditions initiales sont choisies dans $M_1$, alors le contrôle optimal ne commute pas .\newline
+
+On suppose que les conditions initiales sont choisies dans $M_1$.\
+On rappelle que  $M_1 = \{(0,y)| |y|\leq 1\}$
+On a donc les espaces tangents $T_{X(0)}M_1 = {0}\times\mathbb{R}$.\newline
+
+La condition de transversalité sur $M_1$ nous donne 
+\begin{equation*}
+P(0) \perp T_{X(0)}M_1
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Question (iii)(b)}
+On obtient donc les conditions suivantes:
+
+$$
+\left\{
+\begin{array}{ll}
+p_1(0) = \pm 1 \\
+p_2(0) = 0 \\
+\end{array}
+\right.
+$$
+
+En nous rappelant que 
+$$
+\left\{
+\begin{array}{ll}
+p_1(t) = c_1 \\
+p_2(t) = c_1 + (p_2(0)-c_1)e^{-t}
+\end{array}
+\right.
+$$
+
+on en déduit que $c_1=\pm 1$, donc que: $$p_1(t) + p_2(t) = \pm (2-e^{-t}) \neq 0 \quad \forall t \geq 0$$\\Or, $u(t)=-signe(p_1(t)+p_2(t))$, donc $u$ ne commute pas.
+\end{frame}
+
+\begin{frame}{Question (iii)(b)}
+Par exemple, si $c_1 = 1$, on a $u(t)=-1$.\newline
+En injectant dans le système de contrôle on a $(x,y)$ solution de:
+
+$$
+\left\{
+\begin{array}{ll}
+x'(t) = -y(t)+1 \\
+y'(t) = y(t)+1
+\end{array}
+\right.
+$$
+
+On déduit directement que:
+$$
+\left\{
+\begin{array}{ll}
+x(t)= -y_1e^t  + 2t+ x_1 \\
+y(t)=y_1e^t-1
+\end{array}
+\right.
+$$
+Avec:
+$$
+\left\{
+\begin{array}{ll}
+x_1= x(0)+y(0) +1 \\
+y_1=y(0)+1
+\end{array}
+\right.
+$$
+En partant du point $x=x(0)=0,y=y(0)=1$, on en déduit que
+$$
+\left\{
+\begin{array}{ll}
+x(t) &= -2e^t +2 t+2 \\
+y(t) &= 2e^t -1
+\end{array} 
+\right.
+$$
+\end{frame}
+
+\end{document}
